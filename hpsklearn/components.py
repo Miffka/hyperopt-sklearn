@@ -755,14 +755,14 @@ def _trees_hp_space(
 #############################################################
 ##==== Random forest classifier/regressor constructors ====##
 #############################################################
-def random_forest(name, criterion=None, class_weight='choose', **kwargs):
+def random_forest(name, criterion=None, class_weight=None, **kwargs):
     '''
     Return a pyll graph with hyperparamters that will construct
     a sklearn.ensemble.RandomForestClassifier model.
 
     Args:
         criterion([str]): choose 'gini' or 'entropy'.
-        class_weight([str]): choose 'choose' or 'balanced'.
+        class_weight([str]): choose 'choose', None or 'balanced'.
 
     See help(hpsklearn.components._trees_hp_space) for info on additional
     available random forest/extra trees arguments.
@@ -773,8 +773,7 @@ def random_forest(name, criterion=None, class_weight='choose', **kwargs):
     hp_space = _trees_hp_space(_name, **kwargs)
     hp_space['criterion'] = (_trees_criterion(_name('criterion'))
                              if criterion is None else criterion)
-    hp_space['class_weight'] = (_class_weight(name_func('clsweight'))
-                          if class_weight == 'choose' else class_weight),
+    hp_space['class_weight'] = class_weight
     return scope.sklearn_RandomForestClassifier(**hp_space)
 
 
