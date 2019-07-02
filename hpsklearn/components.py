@@ -727,7 +727,6 @@ def _trees_hp_space(
         min_samples_leaf=None,
         bootstrap=None,
         oob_score=False,
-        class_weight='choose',
         n_jobs=1,
         random_state=None,
         verbose=False):
@@ -764,7 +763,7 @@ def random_forest(name, criterion=None, class_weight='choose', **kwargs):
     Args:
         criterion([str]): choose 'gini' or 'entropy'.
         class_weight([str]): choose 'choose' or 'balanced'.
-'
+
     See help(hpsklearn.components._trees_hp_space) for info on additional
     available random forest/extra trees arguments.
     '''
@@ -774,9 +773,8 @@ def random_forest(name, criterion=None, class_weight='choose', **kwargs):
     hp_space = _trees_hp_space(_name, **kwargs)
     hp_space['criterion'] = (_trees_criterion(_name('criterion'))
                              if criterion is None else criterion)
-    
-    hp_space['class_weight']=(_class_weight(_name('clsweight'))
-                      if class_weight == 'choose' else class_weight),
+    hp_space['class_weight'] = (_class_weight(name_func('clsweight'))
+                          if class_weight == 'choose' else class_weight),
     return scope.sklearn_RandomForestClassifier(**hp_space)
 
 
