@@ -1283,6 +1283,7 @@ def _xgboost_hp_space(
     reg_lambda=None,
     scale_pos_weight=1,
     base_score=0.5,
+    n_jobs=1,
     random_state=None):
     '''Generate XGBoost hyperparameters search space
     '''
@@ -1310,6 +1311,7 @@ def _xgboost_hp_space(
                     if reg_lambda is None else reg_lambda),
         scale_pos_weight=scale_pos_weight,
         base_score=base_score,
+        n_jobs=n_jobs,
         seed=_random_state(name_func('rstate'), random_state)
     )
     return hp_space
@@ -1398,7 +1400,7 @@ def passive_aggressive(name,
     C=None,
     fit_intercept=False,
     tol=None,
-    max_iter=None,                   
+    max_iter=None,
     n_jobs=1,
     shuffle=True,
     random_state=None,
